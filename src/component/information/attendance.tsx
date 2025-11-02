@@ -202,110 +202,116 @@ const AttendanceModalContent = () => {
         }
       }}
     >
-      <div className="input-group">
-        <div className="label">구분</div>
-        <div className="select-input">
-          <label>
-            <input
-              disabled={loading}
-              type="radio"
-              name="side"
-              value="groom"
-              hidden
-              defaultChecked
-              ref={(ref) =>
-                (inputRef.current.side.groom = ref as HTMLInputElement)
-              }
-            />
-            <span>신랑</span>
-          </label>
+      {loading ? (
+        <div>Sending...</div>
+      ) : (
+        <>
+          <div className="input-group">
+            <div className="label">구분</div>
+            <div className="select-input">
+              <label>
+                <input
+                  disabled={loading}
+                  type="radio"
+                  name="side"
+                  value="groom"
+                  hidden
+                  defaultChecked
+                  ref={(ref) =>
+                    (inputRef.current.side.groom = ref as HTMLInputElement)
+                  }
+                />
+                <span>신랑</span>
+              </label>
 
-          <label>
-            <input
-              disabled={loading}
-              type="radio"
-              name="side"
-              value="bride"
-              hidden
-              ref={(ref) =>
-                (inputRef.current.side.bride = ref as HTMLInputElement)
-              }
-            />
-            <span>신부</span>
-          </label>
-        </div>
-      </div>
+              <label>
+                <input
+                  disabled={loading}
+                  type="radio"
+                  name="side"
+                  value="bride"
+                  hidden
+                  ref={(ref) =>
+                    (inputRef.current.side.bride = ref as HTMLInputElement)
+                  }
+                />
+                <span>신부</span>
+              </label>
+            </div>
+          </div>
 
-      <div className="input-group">
-        <div className="label">성함</div>
-        <div className="input">
-          <input
-            disabled={loading}
-            type="text"
-            placeholder="참석자 성함을 입력해주세요."
-            maxLength={RULES.name.maxLength}
-            ref={(ref) => (inputRef.current.name = ref as HTMLInputElement)}
-          />
-        </div>
-      </div>
+          <div className="input-group">
+            <div className="label">성함</div>
+            <div className="input">
+              <input
+                disabled={loading}
+                type="text"
+                placeholder="참석자 성함을 입력해주세요."
+                maxLength={RULES.name.maxLength}
+                ref={(ref) => (inputRef.current.name = ref as HTMLInputElement)}
+              />
+            </div>
+          </div>
 
-      <div className="input-group">
-        <div className="label">식사</div>
-        <div className="radio-input">
-          <label>
-            <input
-              disabled={loading}
-              type="radio"
-              name="meal"
-              value="yes"
-              ref={(ref) =>
-                (inputRef.current.meal.yes = ref as HTMLInputElement)
-              }
-            />
-            <span>예정</span>
-          </label>
+          <div className="input-group">
+            <div className="label">식사</div>
+            <div className="radio-input">
+              <label>
+                <input
+                  disabled={loading}
+                  type="radio"
+                  name="meal"
+                  value="yes"
+                  ref={(ref) =>
+                    (inputRef.current.meal.yes = ref as HTMLInputElement)
+                  }
+                />
+                <span>예정</span>
+              </label>
 
-          <label>
-            <input
-              disabled={loading}
-              type="radio"
-              name="meal"
-              value="undecided"
-              ref={(ref) =>
-                (inputRef.current.meal.undecided = ref as HTMLInputElement)
-              }
-            />
-            <span>미정</span>
-          </label>
+              <label>
+                <input
+                  disabled={loading}
+                  type="radio"
+                  name="meal"
+                  value="undecided"
+                  ref={(ref) =>
+                    (inputRef.current.meal.undecided = ref as HTMLInputElement)
+                  }
+                />
+                <span>미정</span>
+              </label>
 
-          <label>
-            <input
-              disabled={loading}
-              type="radio"
-              name="meal"
-              value="no"
-              ref={(ref) =>
-                (inputRef.current.meal.no = ref as HTMLInputElement)
-              }
-            />
-            <span>불참</span>
-          </label>
-        </div>
-      </div>
+              <label>
+                <input
+                  disabled={loading}
+                  type="radio"
+                  name="meal"
+                  value="no"
+                  ref={(ref) =>
+                    (inputRef.current.meal.no = ref as HTMLInputElement)
+                  }
+                />
+                <span>불참</span>
+              </label>
+            </div>
+          </div>
 
-      <div className="input-group">
-        <div className="label">참석 인원 (본인 포함)</div>
-        <div>
-          <input
-            disabled={loading}
-            type="number"
-            min={RULES.count.min}
-            defaultValue={RULES.count.default}
-            ref={(ref) => (inputRef.current.count = ref as HTMLInputElement)}
-          />
-          명
-        </div>
-      </div>
+          <div className="input-group">
+            <div className="label">참석 인원 (본인 포함)</div>
+            <div>
+              <input
+                disabled={loading}
+                type="number"
+                min={RULES.count.min}
+                defaultValue={RULES.count.default}
+                ref={(ref) => (inputRef.current.count = ref as HTMLInputElement)}
+              />
+              명
+            </div>
+          </div>
+        </>
+      )}
     </form>
   )
 }
