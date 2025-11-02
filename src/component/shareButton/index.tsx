@@ -1,7 +1,6 @@
 import {
   BRIDE_FULLNAME,
   GROOM_FULLNAME,
-  LOCATION,
   SHARE_ADDRESS,
   SHARE_ADDRESS_TITLE,
   WEDDING_DATE,
@@ -32,7 +31,7 @@ export const ShareButton = () => {
               description:
                 WEDDING_DATE.format("YYYY년 MMMM D일 dddd A h시") +
                 "\n" +
-                LOCATION,
+                "지타워 컨벤션 2층 단독홀",
               imageUrl:
                 window.location.protocol +
                 "//" +
