@@ -42,7 +42,7 @@ export const Cover = () => {
       <div className="info">
         {WEDDING_DATE.format("YYYY년 MMMM D일 dddd A h시")}
       </div>
-      <div className="info">{LOCATION}</div>
+      <div className="info">지타워 컨밴션 2층 단독홀</div>
     </LazyDiv>
   )
 }
