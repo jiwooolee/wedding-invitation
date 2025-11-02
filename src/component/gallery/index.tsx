@@ -1,76 +1,68 @@
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { LazyDiv } from "../lazyDiv"
 import { Button } from "../button"
 import { useModal } from "../modal"
 import { GALLERY_IMAGES } from "../../images"
+import { ImageCarousel } from "./ImageCarousel"
 
 export const Gallery = () => {
+  const [isExpanded, setIsExpanded] = useState(false)
+  const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(null)
   const { openModal, closeModal } = useModal()
+  const numberOfRows = Math.ceil(GALLERY_IMAGES.length / 3)
 
   useEffect(() => {
     // preload images
     GALLERY_IMAGES.forEach((image) => {
       const img = new Image()
-      img.src = image
+      img.src = image.original
     })
   }, [])
+
+  useEffect(() => {
+    if (selectedImageIndex === null) {
+      return
+    }
+
+    openModal({
+      className: "carousel-modal",
+      closeOnClickBackground: true,
+      onClose: () => setSelectedImageIndex(null),
+      content: <ImageCarousel initialIndex={selectedImageIndex} />,
+    })
+  }, [selectedImageIndex, openModal])
 
   return (
     <LazyDiv className="card gallery">
       <h2 className="english">Gallery</h2>
       <div className="grid-wrapper">
         <div className="grid">
-          {GALLERY_IMAGES.slice(0, 9).map((item, idx) => (
-            <div className="grid-item" key={idx}>
-              <img src={item} draggable={false} alt={`${idx}`} />
-            </div>
-          ))}
+          {(isExpanded ? GALLERY_IMAGES : GALLERY_IMAGES.slice(0, 9)).map(
+            (item, idx) => (
+              <div
+                className="grid-item"
+                key={idx}
+                onClick={() => setSelectedImageIndex(idx)}
+              >
+                <img src={item.thumb} draggable={false} alt={`${idx}`} />
+              </div>
+            ),
+          )}
         </div>
       </div>
 
-      <div className="break" />
+      <div style={{ height: '1rem' }} />
 
-      <Button
-        onClick={() =>
-          openModal({
-            className: "all-photo-modal",
-            closeOnClickBackground: true,
-            header: <div className="title">사진 전체보기</div>,
-            content: (
-              <>
-                <div className="photo-list">
-                  {GALLERY_IMAGES.map((image, idx) => (
-                    <img
-                      key={idx}
-                      src={image}
-                      alt={`${idx}`}
-                      draggable={false}
-                    />
-                  ))}
-                </div>
-                <div className="break" />
-              </>
-            ),
-            footer: (
-              <Button
-                buttonStyle="style2"
-                className="bg-light-grey-color text-dark-color"
-                onClick={closeModal}
-              >
-                닫기
-              </Button>
-            ),
-          })
-        }
-      >
-        사진 전체보기
+      <Button onClick={() => setIsExpanded(!isExpanded)}>
+        {isExpanded ? "접기" : "사진 전체보기"}
       </Button>
       <style>
         {`
           .grid-wrapper {
             position: relative;
             width: 100%;
-            padding-top: 100%; /* 1:1 Aspect Ratio */
+            padding-top: ${isExpanded ? `calc(100% / 3 * ${numberOfRows})` : '100%'}; /* 1:1 Aspect Ratio */
+            transition: padding-top 0.3s ease-out;
           }
           .grid-wrapper::after {
             content: '';
@@ -78,8 +70,9 @@ export const Gallery = () => {
             bottom: 0;
             left: 0;
             right: 0;
-            height: 50%;
+            height: ${isExpanded ? '0' : '50%'};
             background: linear-gradient(to top, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0));
+            transition: height 0.3s ease-out;
           }
           .grid {
             position: absolute;
@@ -89,7 +82,7 @@ export const Gallery = () => {
             right: 0;
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            grid-template-rows: repeat(3, 1fr);
+            grid-template-rows: ${isExpanded ? `repeat(${numberOfRows}, 1fr)` : 'repeat(3, 1fr)'};
             gap: 2px;
           }
           .grid-item {

@@ -33,7 +33,7 @@ export const Cover = () => {
       <div className="image-wrapper">
         <img src={COVER_IMAGE} alt="sample" />
       </div>
-      <div className="subtitle">Happy Wedding Day</div>
+      <h2 className="english">Happy Wedding Day</h2>
       <div className="names">
         {GROOM_FULLNAME}
         <div className="divider" />

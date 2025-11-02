@@ -12,6 +12,10 @@ $transition-duration: 0.3s;
 }
 
 .gallery {
+  .grid-item {
+    cursor: pointer;
+  }
+
   .carousel-wrapper {
     display: flex;
     flex-direction: column;
@@ -75,6 +79,8 @@ $transition-duration: 0.3s;
           width: 30%;
           display: flex;
           align-items: center;
+          cursor: pointer;
+
           &.left {
             justify-content: flex-start;
           }
@@ -122,34 +128,68 @@ $transition-duration: 0.3s;
   }
 }
 
-.all-photo-modal {
-  width: 22rem;
-  .header {
-    .title {
-      text-align: center;
-      font-size: 1.2rem;
-      color: var(--theme-color);
-      padding-bottom: 1rem;
-    }
-  }
+.carousel-modal {
+  max-width: 90vw;
+  max-height: 90vh;
 
   .content {
-    padding: 0 0.7rem 0.7rem 0.7rem;
-    .photo-list {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      grid-auto-rows: 12rem;
-      gap: 0.5rem;
-      img {
+    padding: 0;
+    max-height: none;
+    width: 100%;
+    height: 100%;
+
+    .carousel-wrapper {
+      width: 100%;
+      height: 100%;
+
+      .carousel {
         width: 100%;
         height: 100%;
-        object-fit: cover;
+
+        .carousel-list {
+          width: 100%;
+          height: 100%;
+
+          .carousel-item {
+            width: 100%;
+            height: 100%;
+
+            img {
+              object-fit: contain;
+              width: 100%;
+              height: 100%;
+            }
+          }
+        }
+        .carousel-control {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+
+          .control {
+            padding: 1rem;
+            cursor: pointer;
+
+            .arrow {
+              width: 2rem;
+              height: 2rem;
+              fill: white;
+              filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.5));
+
+              &.right {
+                transform: rotate(180deg);
+              }
+            }
+          }
+        }
       }
     }
   }
-
-  .footer {
-    display: flex;
-    flex-direction: column;
-  }
 }
+
+

@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react"
 import { Cover } from "./component/cover"
 import { Location } from "./component/location"
 import "./App.scss"
@@ -12,9 +13,24 @@ import { STATIC_ONLY } from "./env"
 import { AudioPlayer } from "./component/audioPlayer"
 
 function App() {
+  const audioPlayerRef = useRef<{ play: () => void }>(null)
+
+  useEffect(() => {
+    const playAudio = () => {
+      audioPlayerRef.current?.play()
+      window.removeEventListener("click", playAudio)
+    }
+
+    window.addEventListener("click", playAudio)
+
+    return () => {
+      window.removeEventListener("click", playAudio)
+    }
+  }, [])
+
   return (
     <div className="background">
-      <AudioPlayer />
+      <AudioPlayer ref={audioPlayerRef} />
       <div className="card-view">
         <LazyDiv className="card-group">
           {/* 표지 */}
