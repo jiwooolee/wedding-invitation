@@ -203,7 +203,7 @@ const AttendanceModalContent = () => {
       }}
     >
       {loading ? (
-        <div>Sending...</div>
+        <div className="spinner" />
       ) : (
         <>
           <div className="input-group">

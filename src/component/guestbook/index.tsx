@@ -67,7 +67,7 @@ export const GuestBook = () => {
       <div className="break" />
 
       {isLoading ? (
-        <div>Loading posts...</div>
+        <div className="spinner" />
       ) : (
         posts.map((post) => (
           <div key={post.id} className="post">
@@ -266,7 +266,7 @@ const WriteGuestBookModal = ({ loadPosts }: { loadPosts: () => void }) => {
       }}
     >
       {loading ? (
-        <div>Saving...</div>
+        <div className="spinner" />
       ) : (
         <>
           이름
@@ -363,7 +363,7 @@ const AllGuestBookModal = ({
   return (
     <>
       {loading ? (
-        <div>Loading posts...</div>
+        <div className="spinner" />
       ) : (
         posts.map((post) => (
           <div key={post.id} className="post">
@@ -519,7 +519,7 @@ const DeleteGuestBookModal = ({
       }}
     >
       {loading ? (
-        <div>Deleting...</div>
+        <div className="spinner" />
       ) : (
         <input
           disabled={loading}
