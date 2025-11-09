@@ -65,12 +65,12 @@ export const GROOM_INFO = [
     relation: "신랑 아버지",
     name: GROOM_FATHER,
     phone: "010-5453-6000",
-    account: "농협 352-1078-6514-73",
+    account: "농협은행 352-1078-6514-73",
   },
   {
     relation: "신랑 어머니",
     name: GROOM_MOTHER,
     phone: "010-5423-2003",
-    account: "농협 211811-56-048485",
+    account: "농협은행 211811-56-048485",
   },
 ]

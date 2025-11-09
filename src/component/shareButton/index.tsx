@@ -11,6 +11,7 @@ import { useKakao } from "../store"
 
 const baseUrl = import.meta.env.BASE_URL
 
+
 export const ShareButton = () => {
   const kakao = useKakao()
   return (
@@ -37,7 +38,7 @@ export const ShareButton = () => {
                 "//" +
                 window.location.host +
                 baseUrl +
-                "/test2.jpg",
+                `/test2.png?${Date.now()}`,
               link: {
                 mobileWebUrl:
                   window.location.protocol +

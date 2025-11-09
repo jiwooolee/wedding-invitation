@@ -76,6 +76,11 @@ export const ImageCarousel = ({
     }
   }
 
+  const handleClose = (e: TouchEvent | MouseEvent) => {
+    e.stopPropagation()
+    closeModal()
+  }
+
   return (
     <div className="carousel-wrapper">
       <div
@@ -125,7 +130,11 @@ export const ImageCarousel = ({
         </div>
       </div>
       <div className="close-button-wrapper">
-        <button className="close-button" onClick={closeModal} />
+        <button
+          className="close-button"
+          onClick={handleClose}
+          onTouchEnd={handleClose}
+        />
       </div>
     </div>
   )
