@@ -32,7 +32,7 @@ export const ShareButton = () => {
               description:
                 WEDDING_DATE.format("YYYY년 MMMM D일 dddd A h시") +
                 "\n" +
-                "지타워 컨벤션 2층 단독홀",
+                "지타워 컨벤션 2층 단독홀 단독홀",
               imageUrl:
                 window.location.protocol +
                 "//" +
