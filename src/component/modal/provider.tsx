@@ -28,19 +28,19 @@ export const ModalProvider = ({ children }: PropsWithChildren) => {
     modalFocusTrapInitialized.current = false
   }, [])
   const closeModal = useCallback(() => {
-    const lastModal = modalInfoList[modalInfoList.length - 1]
-    if (lastModal && lastModal.onClose) {
-      lastModal.onClose()
-    }
-
     setModalInfoList((prev) => {
+      const lastModal = prev[prev.length - 1]
+      if (lastModal && lastModal.onClose) {
+        setTimeout(() => lastModal.onClose(), 0)
+      }
+
       const result = prev.slice(0, -1)
       if (result.length === 0) {
         document.body.classList.remove("modal-open")
       }
       return result
     })
-  }, [modalInfoList])
+  }, [])
 
   useEffect(() => {
     if (modalInfoList.length === 0) return
