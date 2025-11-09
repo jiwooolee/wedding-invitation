@@ -1,76 +1,54 @@
-import {
-  useState,
-  TouchEvent,
-  MouseEvent,
-  useRef,
-  useEffect,
-  useCallback,
-} from "react"
+import { useState, TouchEvent, MouseEvent } from "react"
 import { GALLERY_IMAGES } from "../../images"
 import Arrow from "../../icons/arrow.svg?react"
 
 interface ImageCarouselProps {
   initialIndex: number
+  closeModal: () => void
 }
 
-export const ImageCarousel = ({ initialIndex }: ImageCarouselProps) => {
+export const ImageCarousel = ({
+  initialIndex,
+  closeModal,
+}: ImageCarouselProps) => {
   const [currentIndex, setCurrentIndex] = useState(initialIndex)
   const [touchStartX, setTouchStartX] = useState(0)
+  const [touchEndX, setTouchEndX] = useState(0)
+  const [touchStartY, setTouchStartY] = useState(0)
+  const [touchEndY, setTouchEndY] = useState(0)
   const [isDragging, setIsDragging] = useState(false)
   const [dragStartX, setDragStartX] = useState(0)
-  const [dragOffset, setDragOffset] = useState(0)
-  const [touchStartY, setTouchStartY] = useState(0)
-  const carouselRef = useRef<HTMLDivElement>(null)
 
   const handleTouchStart = (e: TouchEvent<HTMLDivElement>) => {
     setTouchStartX(e.targetTouches[0].clientX)
     setTouchStartY(e.targetTouches[0].clientY)
+    setTouchEndX(e.targetTouches[0].clientX)
+    setTouchEndY(e.targetTouches[0].clientY)
   }
 
-  const handleTouchMove = useCallback(
-    (e: globalThis.TouchEvent) => {
-      const currentX = e.targetTouches[0].clientX
-      const currentY = e.targetTouches[0].clientY
-      const dx = currentX - touchStartX
-      const dy = currentY - touchStartY
-
-      if (Math.abs(dx) > Math.abs(dy)) {
-        e.preventDefault()
-      }
-
-      setDragOffset(dx)
-    },
-    [touchStartX, touchStartY],
-  )
-
-  useEffect(() => {
-    const carouselElement = carouselRef.current
-    if (carouselElement) {
-      carouselElement.addEventListener("touchmove", handleTouchMove, {
-        passive: false,
-      })
+  const handleTouchMove = (e: TouchEvent<HTMLDivElement>) => {
+    setTouchEndX(e.targetTouches[0].clientX)
+    setTouchEndY(e.targetTouches[0].clientY)
+    if (
+      Math.abs(touchStartX - e.targetTouches[0].clientX) >
+      Math.abs(touchStartY - e.targetTouches[0].clientY)
+    ) {
+      e.preventDefault()
     }
-    return () => {
-      if (carouselElement) {
-        carouselElement.removeEventListener("touchmove", handleTouchMove)
-      }
-    }
-  }, [handleTouchMove])
+  }
 
-  const handleTouchEnd = (e: TouchEvent<HTMLDivElement>) => {
-    const touchDistance = e.changedTouches[0].clientX - touchStartX
-    if (touchDistance < -50) {
+  const handleTouchEnd = () => {
+    if (touchStartX - touchEndX > 50) {
       // Swipe left
       setCurrentIndex((prev) =>
         prev === GALLERY_IMAGES.length - 1 ? 0 : prev + 1,
       )
-    } else if (touchDistance > 50) {
+    } else if (touchStartX - touchEndX < -50) {
       // Swipe right
       setCurrentIndex((prev) =>
         prev === 0 ? GALLERY_IMAGES.length - 1 : prev - 1,
       )
     }
-    setDragOffset(0)
   }
 
   const handleMouseDown = (e: MouseEvent<HTMLDivElement>) => {
@@ -81,7 +59,7 @@ export const ImageCarousel = ({ initialIndex }: ImageCarouselProps) => {
 
   const handleMouseMove = (e: MouseEvent<HTMLDivElement>) => {
     if (!isDragging) return
-    setDragOffset(e.clientX - dragStartX)
+    e.preventDefault()
   }
 
   const handleMouseUp = (e: MouseEvent<HTMLDivElement>) => {
@@ -96,34 +74,20 @@ export const ImageCarousel = ({ initialIndex }: ImageCarouselProps) => {
         prev === 0 ? GALLERY_IMAGES.length - 1 : prev - 1,
       )
     }
-    setDragOffset(0)
-  }
-
-  const handleMouseLeave = () => {
-    if (isDragging) {
-      setIsDragging(false)
-      setDragOffset(0)
-    }
   }
 
   return (
     <div className="carousel-wrapper">
-      <div className="carousel">
-        <div
-          ref={carouselRef}
-          className="carousel-list"
-          style={{
-            transform: `translateX(${dragOffset}px)`,
-            transition: isDragging ? "none" : "transform 0.3s ease-out",
-            cursor: isDragging ? "grabbing" : "grab",
-          }}
-          onTouchStart={handleTouchStart}
-          onTouchEnd={handleTouchEnd}
-          onMouseDown={handleMouseDown}
-          onMouseMove={handleMouseMove}
-          onMouseUp={handleMouseUp}
-          onMouseLeave={handleMouseLeave}
-        >
+      <div
+        className="carousel"
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+        onMouseDown={handleMouseDown}
+        onMouseMove={handleMouseMove}
+        onMouseUp={handleMouseUp}
+      >
+        <div className="carousel-list">
           <div className="carousel-item" style={{ userSelect: "none" }}>
             <img
               src={GALLERY_IMAGES[currentIndex].original}
@@ -136,27 +100,32 @@ export const ImageCarousel = ({ initialIndex }: ImageCarouselProps) => {
         <div className="carousel-control" style={{ zIndex: 100 }}>
           <div
             className="control left"
-            onClick={() =>
+            onClick={(e) => {
+              e.stopPropagation()
               setCurrentIndex((prev) =>
                 prev === 0 ? GALLERY_IMAGES.length - 1 : prev - 1,
               )
-            }
-            style={{ zIndex: 101, padding: '20px' }}
+            }}
+            style={{ zIndex: 101, padding: "20px" }}
           >
             <Arrow className="arrow left" />
           </div>
           <div
             className="control right"
-            onClick={() =>
+            onClick={(e) => {
+              e.stopPropagation()
               setCurrentIndex((prev) =>
                 prev === GALLERY_IMAGES.length - 1 ? 0 : prev + 1,
               )
-            }
-            style={{ zIndex: 101, padding: '20px' }}
+            }}
+            style={{ zIndex: 101, padding: "20px" }}
           >
             <Arrow className="arrow right" />
           </div>
         </div>
+      </div>
+      <div className="close-button-wrapper">
+        <button className="close-button" onClick={closeModal} />
       </div>
     </div>
   )

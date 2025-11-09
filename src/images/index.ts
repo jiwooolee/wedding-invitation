@@ -28,7 +28,6 @@ import image26 from "./image (26).jpg"
 export const COVER_IMAGE = coverImage
 
 export const GALLERY_IMAGES = [
-  { thumb: image19, original: image19 },
   { thumb: image5, original: image5 },
   { thumb: image6, original: image6 },
   { thumb: image7, original: image7 },
@@ -42,11 +41,7 @@ export const GALLERY_IMAGES = [
   { thumb: image4, original: image4 },
   { thumb: image2, original: image2 },
   { thumb: image3, original: image3 },
-
-
-
-
-
+  { thumb: image19, original: image19 },
   { thumb: image21, original: image21 },
   { thumb: image16, original: image16 },
   { thumb: image25, original: image25 },
@@ -55,17 +50,7 @@ export const GALLERY_IMAGES = [
   { thumb: image14, original: image14 },
   { thumb: image15, original: image15 },
   { thumb: image20, original: image20 },
-
-
-
-
   { thumb: image17, original: image17 },
   { thumb: image18, original: image18 },
-
-
   { thumb: image22, original: image22 },
-
-
-
-
 ]

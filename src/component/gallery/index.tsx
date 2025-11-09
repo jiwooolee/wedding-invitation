@@ -28,9 +28,14 @@ export const Gallery = () => {
       className: "carousel-modal",
       closeOnClickBackground: true,
       onClose: () => setSelectedImageIndex(null),
-      content: <ImageCarousel initialIndex={selectedImageIndex} />,
+      content: (
+        <ImageCarousel
+          initialIndex={selectedImageIndex}
+          closeModal={closeModal}
+        />
+      ),
     })
-  }, [selectedImageIndex, openModal])
+  }, [selectedImageIndex, openModal, closeModal])
 
   return (
     <LazyDiv className="card gallery">
