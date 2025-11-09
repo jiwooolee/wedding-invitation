@@ -151,13 +151,6 @@ export const ImageCarousel = ({
           </div>
         </div>
       </div>
-      <div className="close-button-wrapper">
-        <button
-          className="close-button"
-          onClick={handleClose}
-          onTouchEnd={handleClose}
-        />
-      </div>
     </div>
   )
 }

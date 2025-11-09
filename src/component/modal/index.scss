@@ -33,32 +33,37 @@
       padding: 0.5rem;
       background-color: var(--light-color);
       z-index: 7;
+      display: flex; /* Added for flexbox positioning */
+      justify-content: flex-end; /* Pushes close button to the end */
+
       .close-button-wrapper {
         display: flex;
         justify-content: flex-end;
         .close-button {
           position: relative;
           z-index: 3;
-          width: 1rem;
-          height: 1rem;
+          width: 2rem; /* Increased size */
+          height: 2rem; /* Increased size */
+          background-color: transparent; /* Transparent background */
+          border-radius: 50%; /* Ensure it remains circular */
           &::before {
             content: "";
-            width: 0.1rem;
-            height: 100%;
-            background-color: var(--dark-grey-color);
+            width: 0.15rem; /* Adjusted for new size */
+            height: 70%; /* Adjusted for new size */
+            background-color: black; /* Black 'X' */
             position: absolute;
             transform: rotate(45deg);
-            top: 0;
+            top: 15%; /* Adjusted for new size */
             left: 50%;
           }
           &::after {
             content: "";
-            width: 0.1rem;
-            height: 100%;
-            background-color: var(--dark-grey-color);
+            width: 0.15rem; /* Adjusted for new size */
+            height: 70%; /* Adjusted for new size */
+            background-color: black; /* Black 'X' */
             position: absolute;
             transform: rotate(135deg);
-            top: 0;
+            top: 15%; /* Adjusted for new size */
             left: 50%;
           }
         }

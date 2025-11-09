@@ -13,6 +13,7 @@ const baseUrl = import.meta.env.BASE_URL
 
 
 export const ShareButton = () => {
+  console.log(baseUrl)
   const kakao = useKakao()
   return (
     <LazyDiv className="footer share-button">
@@ -38,7 +39,7 @@ export const ShareButton = () => {
                 "//" +
                 window.location.host +
                 baseUrl +
-                `/test2.png?`,
+                `/public/test2.png`,
               link: {
                 mobileWebUrl:
                   window.location.protocol +
