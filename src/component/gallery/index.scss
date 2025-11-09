@@ -132,6 +132,25 @@ $transition-duration: 0.3s;
   max-width: 90vw;
   max-height: 90vh;
 
+  .header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 10;
+    background: none;
+
+    .close-button-wrapper {
+      padding: 1rem;
+      .close-button {
+        &::before,
+        &::after {
+          background-color: white;
+        }
+      }
+    }
+  }
+
   .content {
     padding: 0;
     max-height: none;

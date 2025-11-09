@@ -1,4 +1,11 @@
-import { useState, TouchEvent, MouseEvent } from "react"
+import {
+  useState,
+  TouchEvent,
+  MouseEvent,
+  useRef,
+  useEffect,
+  useCallback,
+} from "react"
 import { GALLERY_IMAGES } from "../../images"
 import Arrow from "../../icons/arrow.svg?react"
 
@@ -9,30 +16,55 @@ interface ImageCarouselProps {
 export const ImageCarousel = ({ initialIndex }: ImageCarouselProps) => {
   const [currentIndex, setCurrentIndex] = useState(initialIndex)
   const [touchStartX, setTouchStartX] = useState(0)
-  const [touchEndX, setTouchEndX] = useState(0)
   const [isDragging, setIsDragging] = useState(false)
   const [dragStartX, setDragStartX] = useState(0)
   const [dragOffset, setDragOffset] = useState(0)
+  const [touchStartY, setTouchStartY] = useState(0)
+  const carouselRef = useRef<HTMLDivElement>(null)
 
   const handleTouchStart = (e: TouchEvent<HTMLDivElement>) => {
     setTouchStartX(e.targetTouches[0].clientX)
-    setTouchEndX(e.targetTouches[0].clientX) // Reset touchEndX on new touch
+    setTouchStartY(e.targetTouches[0].clientY)
   }
 
-  const handleTouchMove = (e: TouchEvent<HTMLDivElement>) => {
-    const currentX = e.targetTouches[0].clientX
-    setTouchEndX(currentX)
-    setDragOffset(currentX - touchStartX)
-  }
+  const handleTouchMove = useCallback(
+    (e: globalThis.TouchEvent) => {
+      const currentX = e.targetTouches[0].clientX
+      const currentY = e.targetTouches[0].clientY
+      const dx = currentX - touchStartX
+      const dy = currentY - touchStartY
 
-  const handleTouchEnd = () => {
-    const touchDistance = touchStartX - touchEndX
-    if (touchDistance > 50) {
+      if (Math.abs(dx) > Math.abs(dy)) {
+        e.preventDefault()
+      }
+
+      setDragOffset(dx)
+    },
+    [touchStartX, touchStartY],
+  )
+
+  useEffect(() => {
+    const carouselElement = carouselRef.current
+    if (carouselElement) {
+      carouselElement.addEventListener("touchmove", handleTouchMove, {
+        passive: false,
+      })
+    }
+    return () => {
+      if (carouselElement) {
+        carouselElement.removeEventListener("touchmove", handleTouchMove)
+      }
+    }
+  }, [handleTouchMove])
+
+  const handleTouchEnd = (e: TouchEvent<HTMLDivElement>) => {
+    const touchDistance = e.changedTouches[0].clientX - touchStartX
+    if (touchDistance < -50) {
       // Swipe left
       setCurrentIndex((prev) =>
         prev === GALLERY_IMAGES.length - 1 ? 0 : prev + 1,
       )
-    } else if (touchDistance < -50) {
+    } else if (touchDistance > 50) {
       // Swipe right
       setCurrentIndex((prev) =>
         prev === 0 ? GALLERY_IMAGES.length - 1 : prev - 1,
@@ -78,6 +110,7 @@ export const ImageCarousel = ({ initialIndex }: ImageCarouselProps) => {
     <div className="carousel-wrapper">
       <div className="carousel">
         <div
+          ref={carouselRef}
           className="carousel-list"
           style={{
             transform: `translateX(${dragOffset}px)`,
@@ -85,7 +118,6 @@ export const ImageCarousel = ({ initialIndex }: ImageCarouselProps) => {
             cursor: isDragging ? "grabbing" : "grab",
           }}
           onTouchStart={handleTouchStart}
-          onTouchMove={handleTouchMove}
           onTouchEnd={handleTouchEnd}
           onMouseDown={handleMouseDown}
           onMouseMove={handleMouseMove}
