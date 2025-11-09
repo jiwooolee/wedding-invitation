@@ -31,9 +31,9 @@ export const ShareButton = () => {
             content: {
               title: `이지우 ❤️ 이선영의 결혼식에 초대합니다.`,
               description:
-                "2026년 1월 26일 토요일 오후 2시" +
+                "2026년 1월 24일 토요일 오후 2시" +
                 "\n" +
-                "지타워 컨벤션 2층 단독홀 단독홀",
+                "지타워 컨벤션 2층 단독홀",
               imageUrl:
                 window.location.protocol +
                 "//" +
