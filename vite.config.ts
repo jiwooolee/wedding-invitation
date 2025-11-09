@@ -33,7 +33,7 @@ export default defineConfig({
         data: {
           GROOM_FULLNAME,
           BRIDE_FULLNAME,
-          DESCRIPTION: `2026년 1월 24일 토요일 오후 2시 \n 지타워 컨벤션 2층 단독홀`,
+          DESCRIPTION: '2026년 1월 24일 토요일 오후 2시' + '\n' + '지타워 컨벤션 2층 단독홀',
         },
       },
     }),
