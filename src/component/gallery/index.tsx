@@ -15,7 +15,7 @@ export const Gallery = () => {
     // preload images
     GALLERY_IMAGES.forEach((image) => {
       const img = new Image()
-      img.src = image.original
+      img.src = image.thumb
     })
   }, [])
 
@@ -58,7 +58,7 @@ export const Gallery = () => {
 
       <div style={{ height: '1rem' }} />
 
-      <Button onClick={() => setIsExpanded(!isExpanded)}>
+      <Button type="button" onClick={() => setIsExpanded(!isExpanded)}>
         {isExpanded ? "접기" : "사진 전체보기"}
       </Button>
       <style>
