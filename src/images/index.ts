@@ -1,4 +1,5 @@
-import coverImage from "./image (1).jpg"
+import originalCoverImage from "./image (1).jpg"
+import thumbCoverImage from "../thumbnail/image (1).jpg"
 import originalImage2 from "./image (2).jpg"
 import originalImage3 from "./image (3).jpg"
 import originalImage4 from "./image (4).jpg"
@@ -51,7 +52,10 @@ import thumbImage24 from "../thumbnail/image (24).jpg"
 import thumbImage25 from "../thumbnail/image (25).jpg"
 import thumbImage26 from "../thumbnail/image (26).jpg"
 
-export const COVER_IMAGE = coverImage
+export const COVER_IMAGE = {
+  thumb: thumbCoverImage,
+  original: originalCoverImage,
+}
 
 export const GALLERY_IMAGES = [
   { thumb: thumbImage5, original: originalImage5 },
