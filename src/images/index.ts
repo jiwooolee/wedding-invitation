@@ -50,7 +50,7 @@ export const GALLERY_IMAGES = [
   { thumb: thumbImage25, original: thumbImage25 },
   { thumb: thumbImage12, original: thumbImage12 },
   { thumb: thumbImage13, original: thumbImage13 },
-  { thumb: thumbImage14, original: originalImage14 },
+  { thumb: thumbImage14, original: thumbImage14 },
   { thumb: thumbImage15, original: thumbImage15 },
   { thumb: thumbImage20, original: thumbImage20 },
   { thumb: thumbImage17, original: thumbImage17 },
