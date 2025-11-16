@@ -19,12 +19,27 @@ export const ImageCarousel = ({
   closeModal,
 }: ImageCarouselProps) => {
   const [currentIndex, setCurrentIndex] = useState(initialIndex)
+  const [imageSrc, setImageSrc] = useState(
+    GALLERY_IMAGES[initialIndex].thumb,
+  )
+  const [loading, setLoading] = useState(true)
   const [touchStartX, setTouchStartX] = useState(0)
   const [touchEndX, setTouchEndX] = useState(0)
   const [touchStartY, setTouchStartY] = useState(0)
   const [isDragging, setIsDragging] = useState(false)
   const [dragStartX, setDragStartX] = useState(0)
   const carouselRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    setLoading(true)
+    setImageSrc(GALLERY_IMAGES[currentIndex].thumb)
+    const img = new Image()
+    img.src = GALLERY_IMAGES[currentIndex].original
+    img.onload = () => {
+      setImageSrc(GALLERY_IMAGES[currentIndex].original)
+      setLoading(false)
+    }
+  }, [currentIndex])
 
   const handleTouchStart = (e: TouchEvent<HTMLDivElement>) => {
     setTouchStartX(e.targetTouches[0].clientX)
@@ -117,10 +132,11 @@ export const ImageCarousel = ({
         <div className="carousel-list">
           <div className="carousel-item" style={{ userSelect: "none" }}>
             <img
-              src={GALLERY_IMAGES[currentIndex].original}
+              src={imageSrc}
               alt={`${currentIndex}`}
               draggable={false}
               style={{ pointerEvents: "none" }}
+              className={loading ? "blur" : ""}
             />
           </div>
         </div>
