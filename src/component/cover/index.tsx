@@ -6,7 +6,6 @@ import {
 } from "../../const"
 import { COVER_IMAGE } from "../../images"
 import { LazyDiv } from "../lazyDiv"
-import { useState, useEffect } from "react"
 
 const DAY_OF_WEEK = [
   "Sunday",
@@ -19,16 +18,6 @@ const DAY_OF_WEEK = [
 ]
 
 export const Cover = () => {
-  const [imageSrc, setImageSrc] = useState(COVER_IMAGE.thumb)
-
-  useEffect(() => {
-    const img = new Image()
-    img.src = COVER_IMAGE.original
-    img.onload = () => {
-      setImageSrc(COVER_IMAGE.original)
-    }
-  }, [])
-
   return (
     <LazyDiv className="card cover">
       <div className="wedding-date">
@@ -42,7 +31,7 @@ export const Cover = () => {
         {DAY_OF_WEEK[WEDDING_DATE.day()]}
       </div>
       <div className="image-wrapper">
-        <img src={imageSrc} alt="sample" />
+        <img src={COVER_IMAGE.original} alt="sample" />
       </div>
       <h2 className="english">Happy Wedding Day</h2>
       <div className="names">
