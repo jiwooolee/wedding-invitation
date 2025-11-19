@@ -13,25 +13,44 @@ import { STATIC_ONLY } from "./env"
 import { AudioPlayer } from "./component/audioPlayer"
 
 function App() {
-  const audioPlayerRef = useRef<{ play: () => void }>(null)
+  const audioPlayerRef = useRef<{ play: () => Promise<void> | undefined }>(null)
+  const hasPlayed = useRef(false)
 
   useEffect(() => {
-    const playAudio = () => {
-      audioPlayerRef.current?.play()
-      window.removeEventListener("click", playAudio)
+    const tryAutoplay = () => {
+      if (hasPlayed.current) return
+
+      if (document.visibilityState === "visible") {
+        hasPlayed.current = true
+        const playPromise = audioPlayerRef.current?.play()
+
+        if (playPromise !== undefined) {
+          playPromise.catch(() => {
+            // If autoplay fails, set up interaction listeners
+            const onFirstInteraction = () => {
+              audioPlayerRef.current?.play()
+            }
+            window.addEventListener("click", onFirstInteraction, { once: true })
+            window.addEventListener("touchstart", onFirstInteraction, {
+              once: true,
+            })
+          })
+        }
+      }
     }
 
-    window.addEventListener("click", playAudio)
+    document.addEventListener("visibilitychange", tryAutoplay)
+    tryAutoplay() // Initial attempt
 
     return () => {
-      window.removeEventListener("click", playAudio)
+      document.removeEventListener("visibilitychange", tryAutoplay)
     }
   }, [])
 
   return (
     <div className="background">
       <AudioPlayer ref={audioPlayerRef} />
-      <div className="card-view">
+      <div className={`card-view visible`}>
         <LazyDiv className="card-group">
           {/* 표지 */}
           <Cover />

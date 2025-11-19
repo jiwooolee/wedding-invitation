@@ -1,28 +1,53 @@
-import { forwardRef, useImperativeHandle, useRef, useState } from "react"
+import { forwardRef, useImperativeHandle, useRef, useState, useEffect } from "react"
 import "./index.scss"
 import { VolumeOnIcon } from "../../icons/volumeOn"
 import { VolumeOffIcon } from "../../icons/volumeOff"
 
 export const AudioPlayer = forwardRef((_, ref) => {
   const audioRef = useRef<HTMLAudioElement>(null)
-  const [isMuted, setIsMuted] = useState(false)
+  const [isPlaying, setIsPlaying] = useState(false)
 
   useImperativeHandle(ref, () => ({
     play: () => {
-      if (audioRef.current) {
-        audioRef.current.muted = false
-        setIsMuted(false)
-        audioRef.current.play()
+      const audio = audioRef.current
+      if (audio) {
+        const promise = audio.play()
+        if (promise !== undefined) {
+          promise
+            .then(() => {
+              setIsPlaying(true)
+            })
+            .catch(() => {
+              setIsPlaying(false)
+            })
+        }
+        return promise
       }
+      return Promise.reject("Audio element not found")
     },
   }))
 
-  const toggleMute = () => {
+  const togglePlay = () => {
     const audio = audioRef.current
     if (audio) {
-      const newMutedState = !audio.muted
-      audio.muted = newMutedState
-      setIsMuted(newMutedState)
+      if (isPlaying) {
+        if (audio.muted) {
+          audio.muted = false
+        } else {
+          audio.pause()
+          setIsPlaying(false)
+        }
+      } else {
+        audio.muted = false
+        audio
+          .play()
+          .then(() => {
+            setIsPlaying(true)
+          })
+          .catch(() => {
+            setIsPlaying(false)
+          })
+      }
     }
   }
 
@@ -31,13 +56,13 @@ export const AudioPlayer = forwardRef((_, ref) => {
       <audio
         ref={audioRef}
         src={`${import.meta.env.BASE_URL}BGM.mp3`}
-        autoPlay
         preload="auto"
         loop
-        muted={isMuted}
+        muted
+        playsInline
       />
-      <button onClick={toggleMute} className="control-button">
-        {isMuted ? <VolumeOffIcon /> : <VolumeOnIcon />}
+      <button onClick={togglePlay} className="control-button">
+        {isPlaying ? <VolumeOnIcon /> : <VolumeOffIcon />}
       </button>
     </div>
   )
