@@ -1,28 +1,65 @@
-import { forwardRef, useImperativeHandle, useRef, useState } from "react"
+import { forwardRef, useImperativeHandle, useRef, useState, useEffect } from "react"
 import "./index.scss"
 import { VolumeOnIcon } from "../../icons/volumeOn"
 import { VolumeOffIcon } from "../../icons/volumeOff"
 
 export const AudioPlayer = forwardRef((_, ref) => {
   const audioRef = useRef<HTMLAudioElement>(null)
-  const [isMuted, setIsMuted] = useState(true)
+  const [isPlaying, setIsPlaying] = useState(false)
 
-  useImperativeHandle(ref, () => ({
-    play: () => {
-      if (audioRef.current) {
-        audioRef.current.muted = false
-        setIsMuted(false)
-        audioRef.current.play()
-      }
-    },
-  }))
+  useEffect(() => {
+    const audio = audioRef.current
+    if (!audio) return
 
-  const toggleMute = () => {
+    const timer = setTimeout(() => {
+      const promise = audio.play()
+      promise
+        .then(() => {
+          setIsPlaying(true)
+        })
+        .catch(() => {
+          setIsPlaying(false)
+          const onFirstInteraction = () => {
+            togglePlay()
+          }
+          window.addEventListener("click", onFirstInteraction, { once: true })
+          window.addEventListener("touchstart", onFirstInteraction, {
+            once: true,
+          })
+        })
+    }, 150)
+
+    return () => {
+      clearTimeout(timer)
+      // Listeners with { once: true } are auto-removed, but good practice to have a cleanup
+      // This is complex because onFirstInteraction is not stable.
+      // For this case, we rely on `once: true`.
+    }
+  }, [])
+
+  useImperativeHandle(ref, () => ({}))
+
+  const togglePlay = () => {
     const audio = audioRef.current
     if (audio) {
-      const newMutedState = !audio.muted
-      audio.muted = newMutedState
-      setIsMuted(newMutedState)
+      if (isPlaying) {
+        if (audio.muted) {
+          audio.muted = false
+        } else {
+          audio.pause()
+          setIsPlaying(false)
+        }
+      } else {
+        audio.muted = false
+        audio
+          .play()
+          .then(() => {
+            setIsPlaying(true)
+          })
+          .catch(() => {
+            setIsPlaying(false)
+          })
+      }
     }
   }
 
@@ -33,10 +70,11 @@ export const AudioPlayer = forwardRef((_, ref) => {
         src={`${import.meta.env.BASE_URL}BGM.mp3`}
         preload="auto"
         loop
-        muted={isMuted}
+        muted
+        playsInline
       />
-      <button onClick={toggleMute} className="control-button">
-        {isMuted ? <VolumeOffIcon /> : <VolumeOnIcon />}
+      <button onClick={togglePlay} className="control-button">
+        {isPlaying ? <VolumeOnIcon /> : <VolumeOffIcon />}
       </button>
     </div>
   )

@@ -112,6 +112,12 @@ body {
   .card-view {
     width: 980px;
     text-align: center;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+
+    &.visible {
+      opacity: 1;
+    }
 
     @media (max-width: 980px) {
       width: 500px;
