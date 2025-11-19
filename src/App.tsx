@@ -16,16 +16,7 @@ function App() {
   const audioPlayerRef = useRef<{ play: () => void }>(null)
 
   useEffect(() => {
-    const playAudio = () => {
-      audioPlayerRef.current?.play()
-      window.removeEventListener("click", playAudio)
-    }
-
-    window.addEventListener("click", playAudio)
-
-    return () => {
-      window.removeEventListener("click", playAudio)
-    }
+    audioPlayerRef.current?.play()
   }, [])
 
   return (

@@ -5,7 +5,7 @@ import { VolumeOffIcon } from "../../icons/volumeOff"
 
 export const AudioPlayer = forwardRef((_, ref) => {
   const audioRef = useRef<HTMLAudioElement>(null)
-  const [isMuted, setIsMuted] = useState(false)
+  const [isMuted, setIsMuted] = useState(true)
 
   useImperativeHandle(ref, () => ({
     play: () => {
@@ -31,7 +31,6 @@ export const AudioPlayer = forwardRef((_, ref) => {
       <audio
         ref={audioRef}
         src={`${import.meta.env.BASE_URL}BGM.mp3`}
-        autoPlay
         preload="auto"
         loop
         muted={isMuted}
