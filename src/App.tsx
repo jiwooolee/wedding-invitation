@@ -1,4 +1,4 @@
-import { useRef } from "react"
+import { useEffect, useRef } from "react"
 import { Cover } from "./component/cover"
 import { Location } from "./component/location"
 import "./App.scss"
@@ -13,7 +13,39 @@ import { STATIC_ONLY } from "./env"
 import { AudioPlayer } from "./component/audioPlayer"
 
 function App() {
-  const audioPlayerRef = useRef(null)
+  const audioPlayerRef = useRef<{ play: () => Promise<void> | undefined }>(null)
+  const hasPlayed = useRef(false)
+
+  useEffect(() => {
+    const tryAutoplay = () => {
+      if (hasPlayed.current) return
+
+      if (document.visibilityState === "visible") {
+        hasPlayed.current = true
+        const playPromise = audioPlayerRef.current?.play()
+
+        if (playPromise !== undefined) {
+          playPromise.catch(() => {
+            // If autoplay fails, set up interaction listeners
+            const onFirstInteraction = () => {
+              audioPlayerRef.current?.play()
+            }
+            window.addEventListener("click", onFirstInteraction, { once: true })
+            window.addEventListener("touchstart", onFirstInteraction, {
+              once: true,
+            })
+          })
+        }
+      }
+    }
+
+    document.addEventListener("visibilitychange", tryAutoplay)
+    tryAutoplay() // Initial attempt
+
+    return () => {
+      document.removeEventListener("visibilitychange", tryAutoplay)
+    }
+  }, [])
 
   return (
     <div className="background">
