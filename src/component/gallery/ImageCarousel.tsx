@@ -8,6 +8,8 @@ import {
 } from "react"
 import { GALLERY_IMAGES } from "../../images"
 import Arrow from "../../icons/arrow.svg?react"
+import {useModal} from "../modal";
+import {Button} from "../button";
 
 interface ImageCarouselProps {
   initialIndex: number
@@ -151,6 +153,14 @@ export const ImageCarousel = ({
           </div>
         </div>
       </div>
+      <Button
+          style={{width: '100%'}}
+          buttonStyle="style2"
+          className="bg-light-grey-color text-dark-color"
+          onClick={closeModal}
+      >
+        닫기
+      </Button>
     </div>
   )
 }

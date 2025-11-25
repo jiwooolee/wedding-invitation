@@ -115,11 +115,10 @@ export const ModalProvider = ({ children }: PropsWithChildren) => {
               }}
             >
               <div className="header">
-                <div className="close-button-wrapper">
-                  ❤️
-                  <button className="close-button" onClick={closeModal} />
-                </div>
                 {modalInfo.header}
+                {/*<div className="close-button-wrapper">️*/}
+                {/*  <button className="close-button" onClick={closeModal} />*/}
+                {/*</div>*/}
               </div>
               <div className="content">{modalInfo.content}</div>
               <div className="footer">{modalInfo.footer}</div>

@@ -133,10 +133,14 @@ $transition-duration: 0.3s;
   max-height: 90vh;
 
   .header {
-    /* display: none; */ /* Removed to make the header visible */
     background-color: white;
-    min-height: 3rem; /* Give it some height */
-    padding: 0.5rem 1rem; /* Add some padding */
+    .title {
+      text-align: center;
+      font-size: 1.2rem;
+      color: var(--theme-color);
+      padding-bottom: 0.3rem;
+      //border-bottom: 1px solid var(--dark-grey-color);
+    }
   }
 
   .content {

@@ -25,15 +25,16 @@ export const Gallery = () => {
     }
 
     openModal({
-      className: "carousel-modal",
-      closeOnClickBackground: true,
-      onClose: () => setSelectedImageIndex(null),
-      content: (
-        <ImageCarousel
-          initialIndex={selectedImageIndex}
-          closeModal={closeModal}
-        />
-      ),
+        className: "carousel-modal",
+        closeOnClickBackground: true,
+        onClose: () => setSelectedImageIndex(null),
+        header: (<div className='title'>지우 ❤️ 선영 갤러리</div>),
+        content: (
+            <ImageCarousel
+                initialIndex={selectedImageIndex}
+                closeModal={closeModal}
+            />
+        ),
     })
   }, [selectedImageIndex, openModal, closeModal])
 
