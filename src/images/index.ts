@@ -19,7 +19,6 @@ import thumbImage18 from "../thumbnail/image (18).jpg"
 import thumbImage19 from "../thumbnail/image (19).jpg"
 import thumbImage20 from "../thumbnail/image (20).jpg"
 import thumbImage21 from "../thumbnail/image (21).jpg"
-import thumbImage22 from "../thumbnail/image (222).jpg"
 import thumbImage23 from "../thumbnail/image (23).jpg"
 import thumbImage24 from "../thumbnail/image (24).jpg"
 import thumbImage25 from "../thumbnail/image (25).jpg"
@@ -55,5 +54,4 @@ export const GALLERY_IMAGES = [
   { thumb: thumbImage20, original: thumbImage20 },
   { thumb: thumbImage17, original: thumbImage17 },
   { thumb: thumbImage18, original: thumbImage18 },
-  { thumb: thumbImage22, original: thumbImage22 },
 ]

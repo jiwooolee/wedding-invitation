@@ -8,7 +8,6 @@ import {
 } from "react"
 import { GALLERY_IMAGES } from "../../images"
 import Arrow from "../../icons/arrow.svg?react"
-import {useModal} from "../modal";
 import {Button} from "../button";
 
 interface ImageCarouselProps {
