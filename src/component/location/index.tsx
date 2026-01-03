@@ -22,9 +22,9 @@ export const Location = () => {
           <div className="transportation-icon-wrapper">
             <SubwayIcon className="transportation-icon"/>
           </div>
-          <div className="heading">지하철</div>
+          <div className="heading" style={{fontSize: '1rem'}}>지하철</div>
           <div />
-          <div className="content">
+          <div className="content" style={{fontSize: '0.9rem'}}>
             <b><p style={{margin: 0}}>1호선 & 7호선 가산디지털단지역</p></b>
             5번 출구에서 약 20M 직진 후 셔틀버스 탑승
             <br />
@@ -40,9 +40,9 @@ export const Location = () => {
           <div className="transportation-icon-wrapper">
             <BusIcon className="transportation-icon" />
           </div>
-          <div className="heading">버스</div>
+          <div className="heading" style={{fontSize: '1rem'}}>버스</div>
           <div />
-          <div className="content">
+          <div className="content" style={{fontSize: '0.9rem'}}>
             <p style={{margin: 0}}><b>지선버스</b> 5536, 5615</p>
             <br />
             <p style={{margin: 0}}><b>마을버스</b> 금천07</p>
@@ -52,9 +52,9 @@ export const Location = () => {
           <div className="transportation-icon-wrapper">
             <ParkingIcon className="transportation-icon" />
           </div>
-          <div className="heading">주차</div>
+          <div className="heading" style={{fontSize: '1rem'}}>주차</div>
           <div />
-          <div className="content">
+          <div className="content" style={{fontSize: '0.9rem'}}>
             <p style={{margin: 0}}>단독주차, 1400대 주차 가능</p>
             <p>2시간 무료주차 (이후 10분당 700원)</p>
           </div>
