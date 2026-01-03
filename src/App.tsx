@@ -55,7 +55,7 @@ function App() {
       <TransformWrapper
         minScale={1}
         initialScale={1}
-        limitToBounds={false}
+        limitToBounds={true}
         disablePadding={true}
         onZoom={(ref) => setIsZoomed(ref.state.scale !== 1)}
         panning={{ disabled: !isZoomed, velocityDisabled: true }}
