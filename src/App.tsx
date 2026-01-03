@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useState } from "react"
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch"
 import { Cover } from "./component/cover"
 import { Location } from "./component/location"
@@ -16,6 +16,7 @@ import { AudioPlayer } from "./component/audioPlayer"
 function App() {
   const audioPlayerRef = useRef<{ play: () => Promise<void> | undefined }>(null)
   const hasPlayed = useRef(false)
+  const [isZoomed, setIsZoomed] = useState(false)
 
   useEffect(() => {
     const tryAutoplay = () => {
@@ -56,7 +57,8 @@ function App() {
         initialScale={1}
         limitToBounds={false}
         disablePadding={true}
-        disabled={false}
+        onZoom={(ref) => setIsZoomed(ref.state.scale !== 1)}
+        panning={{ disabled: !isZoomed, velocityDisabled: true }}
       >
         <TransformComponent
           wrapperStyle={{
