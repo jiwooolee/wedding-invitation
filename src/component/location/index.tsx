@@ -50,26 +50,30 @@ export const Location = () => {
         </div>
         <div className="location-info">
           <div className="transportation-icon-wrapper">
-            <BusIcon className="transportation-icon" />
-          </div>
-          <div className="heading" style={{fontSize: '1rem'}}>셔틀버스</div>
-          <div />
-          <div className="content" style={{fontSize: '0.9rem'}}>
-            <p style={{margin: 0}}>강원 횡성군 안흥면 안흥리 284-11 면사무소 앞</p>
-            <p>오전 10시 40분</p>
-          </div>
-        </div>
-        <div className="location-info">
-          <div className="transportation-icon-wrapper">
             <ParkingIcon className="transportation-icon" />
           </div>
           <div className="heading" style={{fontSize: '1rem'}}>주차</div>
           <div />
           <div className="content" style={{fontSize: '0.9rem'}}>
             <p style={{margin: 0}}>단독주차, 1400대 주차 가능</p>
-            <p>2시간 무료주차 (이후 10분당 700원)</p>
+            <br />
+            <p style={{margin: 0}}>2시간 무료주차 (이후 10분당 700원)</p>
           </div>
+        </div>
+        <div className="location-info">
+          <div className="transportation-icon-wrapper">
+            <BusIcon className="transportation-icon" />
+          </div>
+          <div className="heading" style={{fontSize: '1rem'}}>전세버스</div>
           <div />
+          <div className="content" style={{fontSize: '0.9rem'}}>
+            <p style={{margin: 0}}><b>승차 장소</b></p>
+            강원 횡성군 안흥면 안흥리 284-11 면사무소 앞
+            <br />
+            <br />
+            <p style={{margin: 0}}><b>출발 시간</b> </p>
+            오전 10시 40분
+          </div>
         </div>
       </LazyDiv>
     </>
