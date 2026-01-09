@@ -55,7 +55,7 @@ export const Location = () => {
           <div className="heading" style={{fontSize: '1rem'}}>셔틀버스</div>
           <div />
           <div className="content" style={{fontSize: '0.9rem'}}>
-            <p style={{margin: 0}}>강원 횡성군 안흥면 안흥리 284-11 면사무소 앞</p>
+            <p>강원 횡성군 안흥면 안흥리 284-11 면사무소 앞</p>
             <p style={{margin: 0}}>오전 10시 40분</p>
           </div>
         </div>
